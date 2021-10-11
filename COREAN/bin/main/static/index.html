@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	
+	<title>임시 페이지</title>
+	
+	<script src="/js/jQuery.3.5.1.compressed.js"></script>
+	
+	<script>
+		$(document).ready(function() {
+			alert("jQuery 설정 완료");
+		});
+		
+		$(document).on("click", "#searchBtn", function(){
+			
+			let word = $("input[name='word']").val();
+			
+			$.ajax({
+				cache : false,
+				type : "POST",
+				url : "/search/one",
+				data : JSON.stringify({WORD: word}),
+				dataType : "JSON",
+				contentType : "application/json; charset=utf-8",
+				success : function(result) {
+					if(result.resultCd === "0000"){
+						
+						alert("통신 성공");
+						
+					} else {
+						alert("서버 에러");
+					}
+				},
+				error : function() {
+					alert("서버통신 에러");
+				}
+			});
+		});
+		
+	</script>
+	
+</head>
+
+<body>
+단어:&nbsp;<input type="text" name="word" value="가든"/>&nbsp;<button type="button" id="searchBtn">검색</button>
+</body>
+</html>
